@@ -95,7 +95,7 @@ password: AdminP@ss2026
 | ------ | ---------- | ----------- | --------------- |
 | Web    | 10.20.1.2  | /24         | 10.20.1.1       |
 | Email  | 10.20.1.3  | /24         | 10.20.1.1       |
-| FTP    | 10.20.1.1  | /24         | 10.20.1.1       |
+| FTP    | 10.20.1.4  | /24         | 10.20.1.1       |
 | DNS    | 10.20.1.5  | /24         | 10.20.1.1       |
 
 ---
@@ -105,4 +105,41 @@ password: AdminP@ss2026
 | interface | ip address | subnet mask | explanation                |
 | --------- | ---------- | ----------- | -------------------------- |
 | Gig 0/1   | 10.20.2.2  | /30         | Connect with ASA1 (inside) |
+
+---
+### 3.0 Department Isolation & Access Control
+Extended Access Control Lists (ACLs) were deployed on the Multilayer Switch to enforce strict isolation between departments (Sales, Engineering, and Finance)
+
+**Configuration & Activation**
+
+Extended ACLs (**BLOCK_SALES**, **BLOCK_ENG**, **BLOCK_FIN**) are created and bound inbound to their respective Switched Virtual Interfaces (SVIs)
+
+**Note:** If Packet Tracer resets the SVI configuration upon loading the file, re-apply this activation script in the 'MLS0' CLI before testing isolation:
+
+
+enable
+
+configure terminal
+
+interface vlan 10
+
+ip access-group BLOCK_SALES in
+
+exit
+
+interface vlan 20
+
+ip access-group BLOCK_ENG in
+
+exit
+
+interface vlan 30
+
+ip access-group BLOCK_FIN in
+
+exit
+
+end
+
+
 
