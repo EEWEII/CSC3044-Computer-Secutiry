@@ -108,32 +108,34 @@ password: AdminP@ss2026
 
 ---
 ### 3.0 Department Isolation & Access Control
-Extended Access Control Lists (ACLs) were deployed on the Multilayer Switch to enforce strict isolation between departments (Sales, Engineering, and Finance)
+Extended Access Control Lists (ACLs) were deployed on the Multilayer Switch to enforce strict isolation between departments subnets (Sales, Engineering, and Finance)
 
 **Configuration & Activation**
 
-Extended ACLs (**BLOCK_SALES**, **BLOCK_ENG**, **BLOCK_FIN**) are created and bound inbound to their respective Switched Virtual Interfaces (SVIs)
+Extended ACLs (**BLOCK_SALES**, **BLOCK_ENG**, **BLOCK_FIN**) are created and bound inbound to their respective Switched Virtual Interfaces (SVIs) on MLS0
 
-**Note:** If Packet Tracer resets the SVI configuration upon loading the file, re-apply this activation script in the 'MLS0' CLI before testing isolation:
+**Note:** In Cisco, dynamic SVI bindings and extended access-group associations may revert or become unassigned upon topology initialization or cold reboots.
+
+To ensure continuous enforcement of department isolation during testing and verification, execute the following script in the MLS0 to re-apply and verify the SVI access-group binding prior to isolation testing:
 
 
 enable
 
 configure terminal
 
-interface vlan 10
+interface Vlan10
 
 ip access-group BLOCK_SALES in
 
 exit
 
-interface vlan 20
+interface Vlan20
 
 ip access-group BLOCK_ENG in
 
 exit
 
-interface vlan 30
+interface Vlan30
 
 ip access-group BLOCK_FIN in
 
